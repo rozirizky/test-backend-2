@@ -1,0 +1,70 @@
+TUGAS
+Batas Waktu Pengerjaan : 16 Maret 2023 23:59:00
+Tugas untuk melihat kemampuan merancang sebuah query secara praktikal.
+Deskripsi
+1. Jelaskan apa itu SQL?
+sql adalah bahasa pemrogaman yang digunakan untuk mengakses , mengolah dan memanipulasi database
+2. Sebutkan apa itu DDL, DML, dan DCL dalam SQL beserta perbedaan nya?
+DDL (Data Definition Language) adalah perintah SQL yang berhubungan dengan mengolah struktur database
+DML (Data Manipulation Language) adalah perintah SQL yang berhubungan dengan manipulasi atau pengolahan data dalam table
+DML (Data Manipulation Language) adalah perintah SQL yang berhubungan dengan pengontrolan data
+3. Periksalah file yang terlampir!
+a. Baca file tersebut (boleh menggunakan bahasa pemrograman apapun) lalu masukan
+data tersebut ke dalam sebuah database SQL (boleh menggunakan database SQL
+apapun asalkan mudah diakses dan stabil!)
+b. Lakukanlah perbaikan atau normalisasi terhadap data tersebut sebelum dimasukan ke
+dalam database agar lebih efisien dan ekfektif dalam melakukan analisis pada data
+tersebut
+4. Waktunya melakukan analisis data!
+a. Grouping data tersebut berdasarkan sertifikasi film
+SELECT certificate FROM data_movies.new group by certificate;
+ 
+
+b. Tampilkan sutradara yang telah menyutradarai lebih dari 1 film dan film-film tersebut
+memiliki rating diatas 7.5
+SELECT directors,COUNT(directors) as d FROM new WHERE rating > 7 GROUP BY directors HAVING d > 1
+ 
+c. Tampilkan film apa saja yang meraih keuntungan dalam produksi nya
+SELECT * FROM new WHERE income - budget > 0
+ 
+
+d. Bulan mana yang memiliki jumlah film yang diproduksi terbanyak
+SELECT month,COUNT(month) as m FROM new GROUP BY month ORDER BY m DESC
+ 
+
+e. Sebutkan 5 film apa saja yang memiliki rating tertinggi untuk perbulannya (urutkan dari
+rating yang terkecil ke yang terbesar)
+SELECT month as m,rating,title FROM film  GROUP BY month  ORDER BY rating ASC LIMIT 9,14
+ 
+
+5. Menambahkan sedikit tantangan! (Dapat dilakukan pada saat live interview)
+a. Sebutkan jenis-jenis relationship yang ada di SQL!
+one-to-one, one-to-many, dan many-to-many
+b. Buatlah menjadi 3 tabel baru yaitu tabel film, tabel pemeran film dan tabel sutradara
+dari file yang terlampir
+c. Buat ER Diagram yang menunjukan hubungan antara 3 tabel tersebut
+ 
+
+d. Lakukan query-query yang ada pada soal nomor 4 namun dengan kondisi tabel-tabel
+sudah terpisah (petunjuk: JOIN!)
+a.
+SELECT film.certificate, COUNT(film.certificate) as c, directors.directors,bintang_film.stars FROM film INNER JOIN directors ON film.id = directors.id INNER JOIN bintang_film ON film.id = bintang_film.id  GROUP BY film.certificate 
+ 
+b.
+SELECT directors.directors,COUNT(directors.directors) as d, film.rating  FROM directors INNER JOIN film ON directors.id = film.id  WHERE rating > 7 GROUP BY directors HAVING d > 1
+ 
+c. 
+SELECT directors.directors,film.income - film.budget as keuntungan,bintang_film.stars FROM film INNER JOIN directors ON film.id = directors.id INNER JOIN bintang_film on film.id = bintang_film.id  WHERE film.income - film.budget > 0
+ 
+d.
+SELECT film.month,COUNT(film.month) as totalmonth,bintang_film.stars,directors.directors FROM film INNER JOIN directors ON film.id = directors.id INNER JOIN bintang_film on film.id = bintang_film.id  GROUP BY month ORDER BY totalmonth DESC
+ 
+e.
+SELECT film.month ,film.rating,film.title , bintang_film.stars,directors.directors  FROM film INNER JOIN directors ON film.id = directors.id INNER JOIN bintang_film on film.id = bintang_film.id   GROUP BY film.month  ORDER BY film.rating ASC LIMIT 9,14
+ 
+
+
+
+
+
+
